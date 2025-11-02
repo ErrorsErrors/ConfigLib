@@ -243,7 +243,7 @@ final class Reflect {
 
     static Class<?> getClassByName(String className) {
         try {
-            return Class.forName(className);
+            return Class.forName(className, true, Thread.currentThread().getContextClassLoader());
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
