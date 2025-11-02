@@ -2,7 +2,6 @@ package de.exlll.configlib;
 
 import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.MutableClassToInstanceMap;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -18,7 +17,7 @@ public class ClassToInstanceMapSerializer<B>
         this(ctx, null, null);
     }
 
-    public ClassToInstanceMapSerializer(SerializerContext ctx, @Nullable String prefix, @Nullable String suffix) {
+    public ClassToInstanceMapSerializer(SerializerContext ctx, String prefix, String suffix) {
         this.ctx = ctx;
         this.prefix = prefix == null ? "" : prefix;
         this.suffix = suffix == null ? "" : suffix;
