@@ -32,7 +32,6 @@ dependencies {
     testFixturesApi("org.mockito:mockito-junit-jupiter:5.6.0")
     testFixturesApi("org.hamcrest:hamcrest-all:1.3")
     testFixturesApi("com.google.jimfs:jimfs:1.3.0")
-    testFixturesApi("com.google.guava:guava:32.1.2-jre")
 }
 
 publishing {
