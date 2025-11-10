@@ -52,7 +52,7 @@ public class ClassToInstanceMapSerializer<B>
                 final var serializer = TypeSerializer.newSerializerFor(type, props);
                 B el = serializer.deserialize(e.getValue());
                 map.put(type, el);
-            } catch (Exception ignored) { }
+            } catch (Exception ignored) {}
         }
 
         return map;
@@ -72,11 +72,6 @@ public class ClassToInstanceMapSerializer<B>
     @SuppressWarnings("unchecked")
     private Class<? extends B> resolve(String shortKey) {
         String full = prefix + shortKey + suffix;
-        try {
-            return (Class<? extends B>) Class.forName(full);
-        } catch (ClassNotFoundException ex) {
-            throw new IllegalStateException(
-                    "Не удалось найти класс '" + full + "' при разборе YAML", ex);
-        }
+        return (Class<? extends B>) Reflect.getClassByName(full);
     }
 }
