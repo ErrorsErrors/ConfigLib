@@ -62,4 +62,6 @@ public @interface Polymorphic {
      * @see String#isBlank()
      */
     String property() default DEFAULT_PROPERTY;
+
+    String prefix() default "";
 }

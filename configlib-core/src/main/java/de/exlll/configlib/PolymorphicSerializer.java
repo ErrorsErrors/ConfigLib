@@ -86,7 +86,17 @@ final class PolymorphicSerializer implements Serializer<Object, Map<?, ?>> {
 
     private String getTypeIdentifierByType(Class<?> type) {
         final String alias = aliasByType.get(type);
-        return (alias == null) ? type.getName() : alias;
+        String result = (alias == null) ? type.getName() : alias;
+
+        if (!result.startsWith(getPrefix())) {
+            String msg = "Polymorphic serialization for type '%s' failed. The type identifier '%s' " +
+                         "does not start with the required prefix '%s'."
+                    .formatted(type.getName(), result, getPrefix());
+
+            throw new ConfigurationException(msg);
+        }
+
+        return result.substring(getPrefix().length());
     }
 
     private void requireSerializationNotContainsProperty(Map<?, ?> serialization) {
@@ -112,8 +122,14 @@ final class PolymorphicSerializer implements Serializer<Object, Map<?, ?>> {
     }
 
     private Class<?> getTypeByTypeIdentifier(String typeIdentifier) {
+        typeIdentifier = getPrefix() + typeIdentifier;
         final Class<?> type = typeByAlias.get(typeIdentifier);
         return (type == null) ? tryFindClass(typeIdentifier) : type;
+    }
+
+    private String getPrefix() {
+        String prefix = polymorphic.prefix();
+        return (prefix.endsWith(".") || prefix.isEmpty()) ? prefix : prefix + ".";
     }
 
     private Class<?> tryFindClass(String className) {
