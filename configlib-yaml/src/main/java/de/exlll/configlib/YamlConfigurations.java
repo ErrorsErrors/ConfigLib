@@ -2,6 +2,7 @@ package de.exlll.configlib;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 
@@ -79,6 +80,18 @@ public final class YamlConfigurations {
     ) {
         final var store = new YamlConfigurationStore<>(configurationType, properties);
         return store.load(configurationFile);
+    }
+
+    public static <T> T loadOrDefault(
+            Path configurationFile,
+            Class<T> configurationType,
+            YamlConfigurationProperties properties
+    ) {
+        final var store = new YamlConfigurationStore<>(configurationType, properties);
+        if (Files.exists(configurationFile)) {
+            return store.load(configurationFile);
+        }
+        return store.newDefaultInstance();
     }
 
     /**

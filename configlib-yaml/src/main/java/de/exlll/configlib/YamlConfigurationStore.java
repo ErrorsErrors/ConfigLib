@@ -184,6 +184,10 @@ public final class YamlConfigurationStore<T> implements
         return load(configurationFile);
     }
 
+    public T newDefaultInstance() {
+        return serializer.newDefaultInstance();
+    }
+
     static Dump newYamlDumper() {
         DumpSettings settings = DumpSettings.builder()
                 .setDefaultFlowStyle(FlowStyle.BLOCK)
