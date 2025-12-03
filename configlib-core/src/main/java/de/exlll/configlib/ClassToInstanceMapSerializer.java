@@ -5,6 +5,7 @@ import com.google.common.collect.MutableClassToInstanceMap;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ClassToInstanceMapSerializer<B>
         implements Serializer<ClassToInstanceMap<B>, Map<String, Map<?, ?>>> {
@@ -28,7 +29,7 @@ public class ClassToInstanceMapSerializer<B>
     public Map<String, Map<?, ?>> serialize(ClassToInstanceMap<B> value) {
         if (value == null) return null;
 
-        Map<String, Map<?, ?>> result = new LinkedHashMap<>();
+        Map<String, Map<?, ?>> result = new TreeMap<>();
         value.forEach((clazz, element) -> {
             String key = shorten(clazz);
 
