@@ -29,7 +29,7 @@ public class ClassToInstanceMapSerializer<B>
     public Map<String, Map<?, ?>> serialize(ClassToInstanceMap<B> value) {
         if (value == null) return null;
 
-        Map<String, Map<?, ?>> result = new TreeMap<>();
+        Map<String, Map<?, ?>> result = new LinkedHashMap<>();
         value.forEach((clazz, element) -> {
             String key = shorten(clazz);
 
@@ -44,7 +44,7 @@ public class ClassToInstanceMapSerializer<B>
     public ClassToInstanceMap<B> deserialize(Map<String, Map<?, ?>> section) {
         if (section == null) return null;
 
-        MutableClassToInstanceMap<B> map = MutableClassToInstanceMap.create();
+        MutableClassToInstanceMap<B> map = MutableClassToInstanceMap.create(new LinkedHashMap<>());
         ConfigurationProperties props = ctx.properties();
 
         for (Map.Entry<String, Map<?, ?>> e : section.entrySet()) {
